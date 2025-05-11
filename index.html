@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جم‌سافت | راهکارهای نرم‌افزاری خلاقانه</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --accent: #fd79a8;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            text-align: right;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .logo {
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            right: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .project-card {
+            perspective: 1000px;
+        }
+        
+        .project-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover .project-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .project-front,
+        .project-back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .project-back {
+            transform: rotateY(180deg);
+        }
+
+        /* RTL specific adjustments */
+        .fa,
+        .fas,
+        .far,
+        .fab {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .ml-2 {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+
+        .ml-3 {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+
+        .ml-4 {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+
+        .mr-2 {
+            margin-right: 0;
+            margin-left: 0.5rem;
+        }
+
+        .mr-3 {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+
+        .mr-4 {
+            margin-right: 0;
+            margin-left: 1rem;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        .animate-fadeOut {
+            animation: fadeOut 0.3s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        .step-indicator.active {
+            color: #6c5ce7;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div
+                            class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xl logo">
+                            جی‌اس
+                        </div>
+                        <span class="mr-3 text-xl font-bold text-gradient logo">جم‌سافت</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#home"
+                        class="nav-link text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium">خانه</a>
+                    <a href="#services"
+                        class="nav-link text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium">خدمات</a>
+                    <a href="#portfolio"
+                        class="nav-link text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium">نمونه کارها</a>
+                    <a href="#about"
+                        class="nav-link text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium">درباره ما</a>
+                    <a href="#contact"
+                        class="nav-link text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium">تماس با ما</a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">خانه</a>
+                <a href="#services"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">خدمات</a>
+                <a href="#portfolio"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">نمونه
+                    کارها</a>
+                <a href="#about"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">درباره
+                    ما</a>
+                <a href="#contact"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">تماس
+                    با ما</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">راهکارهای <span
+                            class="text-gradient bg-white">نرم‌افزاری نوآورانه</span></h1>
+                    <p class="text-lg md:text-xl mb-8 opacity-90">ما اپلیکیشن‌های وب زیبا، نرم‌افزارهای دسکتاپ و
+                        تجربه‌های دیجیتالی می‌سازیم که نتایج قابل توجهی برای کسب و کار شما به همراه دارند.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button onclick="showContactAlert()"
+                            class="px-8 py-3 bg-white text-purple-700 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 transform hover:scale-105 shadow-lg">
+                            شروع کنید
+                        </button>
+                        <button onclick="showPortfolioAlert()"
+                            class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-purple-700 transition duration-300 transform hover:scale-105">
+                            مشاهده نمونه کارها
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+                        <div class="absolute inset-0 bg-white rounded-full opacity-10 animate-pulse-slow"></div>
+                        <div class="absolute inset-4 bg-white rounded-full opacity-5 animate-pulse-slow"
+                            style="animation-delay: 0.5s;"></div>
+                        <div class="absolute inset-8 bg-white rounded-full opacity-5 animate-pulse-slow"
+                            style="animation-delay: 1s;"></div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="تصویر برنامه‌نویسی"
+                            class="relative z-10 w-full h-full object-contain animate-float">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4"><span class="text-gradient">خدمات</span> ما</h2>
+                <p class="max-w-2xl mx-auto text-gray-600">ما خدمات جامع توسعه نرم‌افزار متناسب با نیازهای کسب و کار شما
+                    ارائه می‌دهیم.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-gray-50 rounded-xl p-8 card-hover">
+                    <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-laptop-code text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">توسعه وب</h3>
+                    <p class="text-gray-600">اپلیکیشن‌های وب سفارشی که با فناوری‌های مدرن مانند React، Vue و Node.js
+                        ساخته شده‌اند و سریع، امن و مقیاس‌پذیر هستند.</p>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-gray-50 rounded-xl p-8 card-hover">
+                    <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-desktop text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">اپلیکیشن‌های دسکتاپ</h3>
+                    <p class="text-gray-600">برنامه‌های قدرتمند ویندوز که با .NET، Electron یا سایر چارچوب‌ها توسعه
+                        یافته‌اند تا فرآیندهای کسب و کار شما را بهینه کنند.</p>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-gray-50 rounded-xl p-8 card-hover">
+                    <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">طراحی واکنش‌گرا</h3>
+                    <p class="text-gray-600">رابط‌های کاربری زیبا و سازگار با موبایل که روی تمام دستگاه‌ها و اندازه‌های
+                        صفحه نمایش به خوبی کار می‌کنند.</p>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="bg-gray-50 rounded-xl p-8 card-hover">
+                    <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-paint-brush text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">طراحی UI/UX</h3>
+                    <p class="text-gray-600">رابط‌های کاربری و تجربه‌های هوشمندانه طراحی شده برای جذب مخاطبان و افزایش
+                        نرخ تبدیل.</p>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="bg-gray-50 rounded-xl p-8 card-hover">
+                    <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-database text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">راهکارهای پایگاه داده</h3>
+                    <p class="text-gray-600">معماری‌های پایگاه داده سفارشی و بهینه‌سازی‌ها برای اطمینان از اینکه
+                        داده‌های شما سازمان‌یافته، امن و قابل دسترسی هستند.</p>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="bg-gray-50 rounded-xl p-8 card-hover">
+                    <div class="w-16 h-16 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">توسعه API</h3>
+                    <p class="text-gray-600">API‌های RESTful قدرتمند که برنامه‌ها و سرویس‌های شما را با رابط‌های تمیز و
+                        مستندسازی شده به هم متصل می‌کنند.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">نمونه <span class="text-gradient">کارهای</span> ما</h2>
+                <p class="max-w-2xl mx-auto text-gray-600">برخی از پروژه‌های اخیر ما را بررسی کنید و ببینید چگونه به کسب
+                    و کارهایی مانند شما کمک کرده‌ایم.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card h-80 rounded-xl overflow-hidden relative">
+                    <div class="project-inner h-full w-full">
+                        <div class="project-front h-full w-full bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="h-40 bg-purple-100 flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-5xl text-purple-600"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">پلتفرم فروشگاهی</h3>
+                                <p class="text-gray-600">یک فروشگاه آنلاین کامل با قابلیت پرداخت و مدیریت موجودی.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="project-back h-full w-full gradient-bg rounded-xl p-6 flex flex-col justify-center items-center text-white">
+                            <h3 class="text-xl font-bold mb-4">پلتفرم فروشگاهی</h3>
+                            <p class="text-center mb-4">ساخته شده با React، Node.js و MongoDB. ویژگی‌ها شامل موجودی کالا
+                                در زمان واقعی، پرداخت امن و داشبورد مدیریت.</p>
+                            <button onclick="showProjectAlert('E-Commerce Platform')"
+                                class="px-6 py-2 bg-white text-purple-700 rounded-lg font-semibold mt-4">
+                                مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card h-80 rounded-xl overflow-hidden relative">
+                    <div class="project-inner h-full w-full">
+                        <div class="project-front h-full w-full bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="h-40 bg-blue-100 flex items-center justify-center">
+                                <i class="fas fa-chart-line text-5xl text-blue-600"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">داشبورد تحلیلی</h3>
+                                <p class="text-gray-600">ابزار تجسم داده برای پیگیری شاخص‌های کسب و کار و KPI ها.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="project-back h-full w-full gradient-bg rounded-xl p-6 flex flex-col justify-center items-center text-white">
+                            <h3 class="text-xl font-bold mb-4">داشبورد تحلیلی</h3>
+                            <p class="text-center mb-4">توسعه یافته با Vue.js و D3.js. ویژگی‌ها شامل نمودارهای تعاملی،
+                                گزارش‌گیری سفارشی و قابلیت خروجی گرفتن از داده‌ها.</p>
+                            <button onclick="showProjectAlert('Analytics Dashboard')"
+                                class="px-6 py-2 bg-white text-purple-700 rounded-lg font-semibold mt-4">
+                                مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card h-80 rounded-xl overflow-hidden relative">
+                    <div class="project-inner h-full w-full">
+                        <div class="project-front h-full w-full bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="h-40 bg-green-100 flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-5xl text-green-600"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">سیستم زمانبندی</h3>
+                                <p class="text-gray-600">پلتفرم رزرو قرار ملاقات برای کسب و کارهای خدماتی.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="project-back h-full w-full gradient-bg rounded-xl p-6 flex flex-col justify-center items-center text-white">
+                            <h3 class="text-xl font-bold mb-4">سیستم زمانبندی</h3>
+                            <p class="text-center mb-4">ساخته شده با Angular و Firebase. شامل ادغام تقویم، یادآوری
+                                خودکار و پشتیبانی از چند مکان.</p>
+                            <button onclick="showProjectAlert('Scheduling System')"
+                                class="px-6 py-2 bg-white text-purple-700 rounded-lg font-semibold mt-4">
+                                مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card h-80 rounded-xl overflow-hidden relative">
+                    <div class="project-inner h-full w-full">
+                        <div class="project-front h-full w-full bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="h-40 bg-yellow-100 flex items-center justify-center">
+                                <i class="fas fa-file-invoice-dollar text-5xl text-yellow-600"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">صدور فاکتور</h3>
+                                <p class="text-gray-600">برنامه ویندوزی برای ایجاد فاکتورهای حرفه‌ای.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="project-back h-full w-full gradient-bg rounded-xl p-6 flex flex-col justify-center items-center text-white">
+                            <h3 class="text-xl font-bold mb-4">صدور فاکتور</h3>
+                            <p class="text-center mb-4">توسعه یافته با .NET و SQL Server. ویژگی‌ها شامل شخصی‌سازی قالب،
+                                مدیریت مشتری و خروجی PDF.</p>
+                            <button onclick="showProjectAlert('Invoice Generator')"
+                                class="px-6 py-2 bg-white text-purple-700 rounded-lg font-semibold mt-4">
+                                مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card h-80 rounded-xl overflow-hidden relative">
+                    <div class="project-inner h-full w-full">
+                        <div class="project-front h-full w-full bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="h-40 bg-red-100 flex items-center justify-center">
+                                <i class="fas fa-users text-5xl text-red-600"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">سیستم CRM</h3>
+                                <p class="text-gray-600">ابزار مدیریت ارتباط با مشتری برای تیم‌های فروش.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="project-back h-full w-full gradient-bg rounded-xl p-6 flex flex-col justify-center items-center text-white">
+                            <h3 class="text-xl font-bold mb-4">سیستم CRM</h3>
+                            <p class="text-center mb-4">ساخته شده با Laravel و MySQL. شامل پیگیری سرنخ‌ها، مدیریت فرآیند
+                                فروش و ویژگی‌های گزارش‌گیری.</p>
+                            <button onclick="showProjectAlert('CRM System')"
+                                class="px-6 py-2 bg-white text-purple-700 rounded-lg font-semibold mt-4">
+                                مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card h-80 rounded-xl overflow-hidden relative">
+                    <div class="project-inner h-full w-full">
+                        <div class="project-front h-full w-full bg-white rounded-xl shadow-md overflow-hidden">
+                            <div class="h-40 bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-warehouse text-5xl text-indigo-600"></i>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">مدیریت انبار</h3>
+                                <p class="text-gray-600">برنامه دسکتاپ برای پیگیری سطح موجودی و سفارشات.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="project-back h-full w-full gradient-bg rounded-xl p-6 flex flex-col justify-center items-center text-white">
+                            <h3 class="text-xl font-bold mb-4">مدیریت انبار</h3>
+                            <p class="text-center mb-4">توسعه یافته با Electron و SQLite. ویژگی‌ها شامل اسکن بارکد،
+                                هشدار موجودی کم و گزارش‌گیری.</p>
+                            <button onclick="showProjectAlert('Inventory Management')"
+                                class="px-6 py-2 bg-white text-purple-700 rounded-lg font-semibold mt-4">
+                                مشاهده جزئیات
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <button onclick="showMoreProjectsAlert()"
+                    class="px-8 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 shadow-lg">
+                    مشاهده پروژه‌های بیشتر
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:space-x-12">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="relative">
+                        <div class="w-full h-80 bg-gray-100 rounded-xl overflow-hidden">
+                            <div class="absolute inset-0 gradient-bg opacity-20"></div>
+                            <div class="relative z-10 h-full flex items-center justify-center">
+                                <i class="fas fa-code text-6xl text-purple-600"></i>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 gradient-bg rounded-full opacity-10"></div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">درباره <span class="text-gradient">جم‌سافت</span>
+                    </h2>
+                    <p class="text-gray-600 mb-6">جم‌سافت یک شرکت توسعه نرم‌افزار است که در سال1404   با هدف ارائه راهکارهای نرم‌افزاری سفارشی با کیفیت بالا تأسیس شده است.</p>
+                    <p class="text-gray-600 mb-6">تیم ما متشکل از توسعه‌دهندگان، طراحان و مدیران پروژه مشتاق هستیم که به ساخت نرم‌افزارهایی که تفاوت ایجاد می‌کنند، متعهدیم.</p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center">
+                            <div
+                                class="w-8 h-8 gradient-bg rounded-full flex items-center justify-center text-white ml-3">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="font-medium">راهکارهای سفارشی</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div
+                                class="w-8 h-8 gradient-bg rounded-full flex items-center justify-center text-white ml-3">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="font-medium">فناوری‌های مدرن</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div
+                                class="w-8 h-8 gradient-bg rounded-full flex items-center justify-center text-white ml-3">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="font-medium">طراحی واکنش‌گرا</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div
+                                class="w-8 h-8 gradient-bg rounded-full flex items-center justify-center text-white ml-3">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="font-medium">پشتیبانی مداوم</span>
+                        </div>
+                    </div>
+                    <button onclick="showTeamModal()"
+                        class="px-8 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                        <i class="fas fa-users mr-2"></i> آشنایی با تیم ما
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">تماس <span class="text-gradient">با ما</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-600">پروژه‌ای در ذهن دارید یا می‌خواهید درباره نحوه کمک ما به کسب
+                    و کارتان صحبت کنید؟ با ما در تماس باشید!</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 gradient-bg text-white p-10">
+                        <h3 class="text-2xl font-bold mb-6">اطلاعات تماس</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-xl"></i>
+                                </div>
+                                <div class="mr-4">
+                                    <h4 class="font-semibold">آدرس</h4>
+                                    <p class="mt-1 opacity-90">ساری , بلوار خزر</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                                <div class="mr-4">
+                                    <h4 class="font-semibold">ایمیل</h4>
+                                    <p class="mt-1 opacity-90">hyby1380@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-phone-alt text-xl"></i>
+                                </div>
+                                <div class="mr-4">
+                                    <h4 class="font-semibold">تلفن</h4>
+                                    <p class="mt-1 opacity-90">09113865027</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <h4 class="font-semibold mb-4">ما را دنبال کنید</h4>
+                            <div class="flex space-x-4">
+                                <a href="mailto:hyby1380@gmail.com"
+                                    class="w-10 h-10 rounded-full bg-white text-purple-700 flex items-center justify-center hover:bg-gray-100 transition">
+                                    <i class="fas fa-envelope"></i>
+                                </a>    
+
+                                <a href="https://t.me/Mohmd_jam"
+                                    class="w-10 h-10 rounded-full bg-white text-purple-700 flex items-center justify-center hover:bg-gray-100 transition">
+                                    <i class="fab fa-telegram"></i>
+                                </a>
+                                <a href="https://www.instagram.com/Mohmd.jam"
+                                    class="w-10 h-10 rounded-full bg-white text-purple-700 flex items-center justify-center hover:bg-gray-100 transition">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://github.com/Mohmd-jam"
+                                    class="w-10 h-10 rounded-full bg-white text-purple-700 flex items-center justify-center hover:bg-gray-100 transition">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-10">
+                        <form id="contactForm" class="space-y-6">
+                            <!-- Step indicator -->
+                            <div class="relative mb-8">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-xs font-medium step-indicator active" data-step="1">اطلاعات شخصی</span>
+                                    <span class="text-xs font-medium step-indicator" data-step="2">نوع پروژه</span>
+                                    <span class="text-xs font-medium step-indicator" data-step="3">زمان‌بندی</span>
+                                    <span class="text-xs font-medium step-indicator" data-step="4">جزئیات</span>
+                                </div>
+                                <div class="overflow-hidden h-2 text-xs flex rounded-full bg-gray-200">
+                                    <div id="progress-bar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center gradient-bg" style="width: 25%"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 1: Personal Information -->
+                            <div class="step-content" id="step-1">
+                                <div class="space-y-4">
+                            <div>
+                                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">نام و نام خانوادگی</label>
+                                        <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent text-right" placeholder="علی محمدی" required>
+                            </div>
+                            <div>
+                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">آدرس ایمیل</label>
+                                        <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent text-right" placeholder="ali@example.com" required>
+                            </div>
+                            <div>
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">شماره تماس</label>
+                                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent text-right" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-6">
+                                    <button type="button" class="next-step px-6 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                                        مرحله بعد <i class="fas fa-arrow-left mr-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2: Project Type -->
+                            <div class="step-content hidden" id="step-2">
+                                <div class="space-y-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">به چه نوع سایتی نیاز دارید؟</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="project-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="project_type" id="website" value="website" class="hidden">
+                                            <label for="website" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                            </div>
+                            <div>
+                                                    <span class="font-medium block">سایت شرکتی</span>
+                                                    <span class="text-xs text-gray-500">معرفی کسب و کار و خدمات</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="project-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="project_type" id="ecommerce" value="ecommerce" class="hidden">
+                                            <label for="ecommerce" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                            </div>
+                            <div>
+                                                    <span class="font-medium block">فروشگاه آنلاین</span>
+                                                    <span class="text-xs text-gray-500">فروش محصولات یا خدمات</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="project-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="project_type" id="application" value="application" class="hidden">
+                                            <label for="application" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                                                </div>
+                                                <div>
+                                                    <span class="font-medium block">وب اپلیکیشن</span>
+                                                    <span class="text-xs text-gray-500">نرم‌افزار تحت وب با قابلیت‌های پیشرفته</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="project-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="project_type" id="other" value="other" class="hidden">
+                                            <label for="other" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                                                </div>
+                                                <div>
+                                                    <span class="font-medium block">سایر</span>
+                                                    <span class="text-xs text-gray-500">پروژه‌های خاص و سفارشی</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-6">
+                                    <button type="button" class="prev-step px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition duration-300 flex items-center">
+                                        <i class="fas fa-arrow-right ml-2"></i> مرحله قبل
+                                    </button>
+                                    <button type="button" class="next-step px-6 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                                        مرحله بعد <i class="fas fa-arrow-left mr-2"></i>
+                                </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Timeline -->
+                            <div class="step-content hidden" id="step-3">
+                                <div class="space-y-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">در چه مدت زمانی به پروژه نیاز دارید؟</label>
+                                    <div class="space-y-3">
+                                        <div class="timeline-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="timeline" id="urgent" value="urgent" class="hidden">
+                                            <label for="urgent" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                                                </div>
+                                                <div>
+                                                    <span class="font-medium block">فوری (کمتر از یک ماه)</span>
+                                                    <span class="text-xs text-gray-500">نیاز به تکمیل سریع پروژه</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="timeline-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="timeline" id="standard" value="standard" class="hidden">
+                                            <label for="standard" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                                                </div>
+                                                <div>
+                                                    <span class="font-medium block">استاندارد (۱ تا ۳ ماه)</span>
+                                                    <span class="text-xs text-gray-500">زمان کافی برای توسعه با کیفیت</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="timeline-option cursor-pointer border border-gray-300 rounded-lg p-4 hover:border-purple-500 hover:bg-purple-50 transition-colors">
+                                            <input type="radio" name="timeline" id="flexible" value="flexible" class="hidden">
+                                            <label for="flexible" class="cursor-pointer flex items-center">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center mr-3 option-radio">
+                                                    <div class="w-4 h-4 rounded-full gradient-bg hidden option-radio-selected"></div>
+                                                </div>
+                                                <div>
+                                                    <span class="font-medium block">انعطاف‌پذیر (بیش از ۳ ماه)</span>
+                                                    <span class="text-xs text-gray-500">پروژه‌های بزرگ با زمان‌بندی منعطف</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-6">
+                                    <button type="button" class="prev-step px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition duration-300 flex items-center">
+                                        <i class="fas fa-arrow-right ml-2"></i> مرحله قبل
+                                    </button>
+                                    <button type="button" class="next-step px-6 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                                        مرحله بعد <i class="fas fa-arrow-left mr-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 4: Project Details -->
+                            <div class="step-content hidden" id="step-4">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="project_details" class="block text-sm font-medium text-gray-700 mb-1">توضیحات جزئیات پروژه</label>
+                                        <textarea id="project_details" name="project_details" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent text-right" placeholder="لطفاً جزئیات پروژه، نیازمندی‌ها و انتظارات خود را شرح دهید..." required></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">بودجه تقریبی (تومان)</label>
+                                        <select id="budget" name="budget" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent text-right">
+                                            <option value="">لطفاً انتخاب کنید</option>
+                                            <option value="small">کمتر از ۵ میلیون تومان</option>
+                                            <option value="medium">۵ تا ۱۵ میلیون تومان</option>
+                                            <option value="large">۱۵ تا ۳۰ میلیون تومان</option>
+                                            <option value="enterprise">بیش از ۳۰ میلیون تومان</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="terms" name="terms" type="checkbox" class="focus:ring-purple-500 h-4 w-4 text-purple-600 border-gray-300 rounded" required>
+                                        </div>
+                                        <div class="mr-3 text-sm">
+                                            <label for="terms" class="font-medium text-gray-700">با <a href="#" class="text-purple-600 hover:text-purple-500" onclick="showTermsModal(); return false;">شرایط و قوانین</a> موافق هستم</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between mt-6">
+                                    <button type="button" class="prev-step px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition duration-300 flex items-center">
+                                        <i class="fas fa-arrow-right ml-2"></i> مرحله قبل
+                                    </button>
+                                    <button type="submit" class="px-6 py-3 gradient-bg text-white rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 shadow-lg flex items-center">
+                                        ارسال درخواست <i class="fas fa-paper-plane mr-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div
+                            class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xl logo">
+                            جی‌اس
+                        </div>
+                        <span class="mr-3 text-xl font-bold logo">جم‌سافت</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">راهکارهای نرم‌افزاری نوآورانه برای کسب و کارهای مدرن.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="mailto:hyby1380@gmail.com"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-white text-gray-400 hover:text-purple-700 flex items-center justify-center transition-colors duration-300">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://t.me/Mohmd_jam"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-white text-gray-400 hover:text-purple-700 flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://www.instagram.com/Mohmd.jam"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-white text-gray-400 hover:text-purple-700 flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/Mohmd-jam"
+                            class="w-8 h-8 rounded-full bg-gray-800 hover:bg-white text-gray-400 hover:text-purple-700 flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 relative inline-block">
+                        خدمات
+                        <span class="absolute bottom-0 right-0 w-1/2 h-0.5 bg-purple-600"></span>
+                    </h4>
+                    <ul class="space-y-2">
+                        <li><a href="#services" onclick="scrollToSection('services', 'Web Development')"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> توسعه وب</a></li>
+                        <li><a href="#services" onclick="scrollToSection('services', 'Desktop Applications')"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> اپلیکیشن‌های
+                                دسکتاپ</a></li>
+                        <li><a href="#services" onclick="scrollToSection('services', 'UI/UX Design')"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> طراحی UI/UX</a></li>
+                        <li><a href="#services" onclick="scrollToSection('services', 'API Development')"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> توسعه API</a></li>
+                        <li><a href="#services" onclick="showMoreServicesModal()"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-plus text-xs ml-2 text-purple-500"></i> خدمات بیشتر</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 relative inline-block">
+                        شرکت
+                        <span class="absolute bottom-0 right-0 w-1/2 h-0.5 bg-purple-600"></span>
+                    </h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> درباره ما</a></li>
+                        <li><a href="#portfolio"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> نمونه کارها</a></li>
+                        <li><a href="#" onclick="showCareersModal()"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> فرصت‌های شغلی</a></li>
+                        <li><a href="#" onclick="showBlogModal()"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> وبلاگ</a></li>
+                        <li><a href="#contact"
+                                class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i
+                                    class="fas fa-chevron-left text-xs ml-2 text-purple-500"></i> تماس با ما</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 relative inline-block">
+                        خبرنامه
+                        <span class="absolute bottom-0 right-0 w-1/2 h-0.5 bg-purple-600"></span>
+                    </h4>
+                    <p class="text-gray-400 mb-4">برای دریافت آخرین اخبار و بروزرسانی‌ها در خبرنامه ما عضو شوید.</p>
+                    <form id="newsletter-form" class="flex flex-col space-y-3">
+                        <div class="relative">
+                            <input type="email" id="footer-email" placeholder="ایمیل شما"
+                                class="px-4 py-2 rounded-lg focus:outline-none text-gray-900 w-full pr-10 text-right"
+                                required>
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <i class="far fa-envelope text-gray-400"></i>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="px-4 py-2 gradient-bg text-white rounded-lg hover:opacity-90 transition-opacity duration-300 flex items-center justify-center">
+                            عضویت <i class="fas fa-paper-plane mr-2"></i>
+                        </button>
+                    </form>
+                    <div class="mt-4">
+                        <button onclick="showPrivacyPolicyModal()"
+                            class="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-300">سیاست حفظ
+                            حریم خصوصی</button>
+                        <span class="text-gray-600 mx-2">|</span>
+                        <button onclick="showTermsModal()"
+                            class="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-300">شرایط
+                            استفاده از خدمات</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© <span id="current-year">2023</span> جم‌سافت. تمامی حقوق محفوظ است.
+                </p>
+                <div class="mt-4 md:mt-0">
+                    <button onclick="scrollToTop()"
+                        class="w-10 h-10 rounded-full bg-gray-800 hover:bg-purple-600 text-gray-400 hover:text-white flex items-center justify-center transition-colors duration-300">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Form validation and submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Validate form
+            let isValid = true;
+            let errorMessage = '';
+
+            if (name.trim() === '') {
+                isValid = false;
+                errorMessage = 'Please enter your name';
+            } else if (email.trim() === '') {
+                isValid = false;
+                errorMessage = 'Please enter your email';
+            } else if (!isValidEmail(email)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid email address';
+            } else if (subject.trim() === '') {
+                isValid = false;
+                errorMessage = 'Please enter a subject';
+            } else if (message.trim() === '') {
+                isValid = false;
+                errorMessage = 'Please enter your message';
+            }
+
+            if (!isValid) {
+                Swal.fire({
+                    title: 'Form Error',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonColor: '#6c5ce7'
+                });
+                return;
+            }
+
+            // Here you would typically send the data to a server using fetch or XMLHttpRequest
+            // For this example, we'll simulate a server request with a timeout
+
+            // Show loading state
+            Swal.fire({
+                title: 'Sending...',
+                text: 'Please wait while we send your message',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Simulate server request
+            setTimeout(() => {
+            Swal.fire({
+                title: 'Message Sent!',
+                text: `Thank you ${name}, we've received your message and will get back to you soon.`,
+                icon: 'success',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'Great!'
+            });
+            
+            // Reset form
+            this.reset();
+            }, 1500);
+        });
+
+        // Email validation helper
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Newsletter subscription
+        const footerForm = document.querySelector('footer form');
+        if (footerForm) {
+            footerForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const emailInput = this.querySelector('input[type="email"]');
+                const email = emailInput.value;
+
+                if (email.trim() === '' || !isValidEmail(email)) {
+                    Swal.fire({
+                        title: 'Invalid Email',
+                        text: 'Please enter a valid email address',
+                        icon: 'error',
+                        confirmButtonColor: '#6c5ce7'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Subscribed!',
+                    text: 'Thank you for subscribing to our newsletter',
+                    icon: 'success',
+                    confirmButtonColor: '#6c5ce7'
+                });
+
+                emailInput.value = '';
+            });
+        }
+
+        // Project card flip animation enhancement
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.querySelector('.project-inner').style.transform = 'rotateY(180deg)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.querySelector('.project-inner').style.transform = 'rotateY(0)';
+            });
+        });
+
+        // Custom alert functions
+        function showContactAlert() {
+            Swal.fire({
+                title: 'شروع کنید',
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">آماده شروع پروژه خود با جم‌سافت هستید؟ مراحل کار به این صورت است:</p>
+                        <ol class="list-decimal pr-5 space-y-2">
+                            <li>فرم تماس ما را پر کنید</li>
+                            <li>یک مشاوره رایگان رزرو کنید</li>
+                            <li>ما یک پیشنهاد سفارشی ایجاد می‌کنیم</li>
+                            <li>توسعه آغاز می‌شود!</li>
+                        </ol>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'برو به فرم تماس',
+                showCancelButton: true,
+                cancelButtonText: 'بعداً',
+                footer: '<a href="#contact" class="text-purple-600 hover:underline">پرش به فرم تماس</a>'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector('#contact').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest',
+                        offsetTop: -80
+                    });
+                }
+            });
+        }
+
+        function showPortfolioAlert() {
+            Swal.fire({
+                title: 'نمونه کارهای ما',
+                text: 'شما می‌توانید پروژه‌های برجسته ما را در زیر مشاهده کنید. هر پروژه نشان‌دهنده تخصص ما در فناوری‌ها و صنایع مختلف است.',
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'مشاهده پروژه‌ها',
+                showCancelButton: true,
+                cancelButtonText: 'بستن',
+                footer: '<a href="#portfolio" class="text-purple-600 hover:underline">پرش به نمونه کارها</a>'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector('#portfolio').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest',
+                        offsetTop: -80
+                    });
+                }
+            });
+        }
+
+        function showProjectAlert(projectName) {
+            // Define project details based on the project name
+            const projectDetails = {
+                'E-Commerce Platform': {
+                    title: 'پلتفرم فروشگاهی',
+                    technologies: ['React.js', 'Node.js', 'MongoDB', 'Redux', 'Stripe API'],
+                    features: ['طراحی واکنش‌گرا', 'پردازش پرداخت امن', 'مدیریت موجودی محصول', 'احراز هویت کاربر', 'داشبورد مدیریت']
+                },
+                'Analytics Dashboard': {
+                    title: 'داشبورد تحلیلی',
+                    technologies: ['Vue.js', 'D3.js', 'Express', 'PostgreSQL', 'Chart.js'],
+                    features: ['نمودارهای تعاملی', 'فیلتر کردن داده‌ها', 'خروجی PDF/CSV', 'مجوزهای کاربری', 'گزارش‌گیری سفارشی']
+                },
+                'Scheduling System': {
+                    title: 'سیستم زمانبندی',
+                    technologies: ['Angular', 'Firebase', 'Google Calendar API', 'Twilio API', 'SCSS'],
+                    features: ['ادغام تقویم', 'اطلاع‌رسانی پیامکی', 'پشتیبانی از چند مکان', 'قرارهای ملاقات تکراری', 'مدیریت کارکنان']
+                },
+                'Invoice Generator': {
+                    title: 'صدور فاکتور',
+                    technologies: ['.NET', 'SQL Server', 'C#', 'WPF', 'Entity Framework'],
+                    features: ['تولید PDF', 'مدیریت مشتری', 'شخصی‌سازی قالب', 'محاسبه مالیات', 'پیگیری پرداخت']
+                },
+                'CRM System': {
+                    title: 'سیستم CRM',
+                    technologies: ['Laravel', 'MySQL', 'jQuery', 'Bootstrap', 'AWS'],
+                    features: ['پیگیری سرنخ‌ها', 'مدیریت فرآیند فروش', 'ادغام ایمیل', 'خودکارسازی وظایف', 'تحلیل عملکرد']
+                },
+                'Inventory Management': {
+                    title: 'مدیریت انبار',
+                    technologies: ['Electron', 'SQLite', 'React', 'Node.js', 'Barcode.js'],
+                    features: ['اسکن بارکد', 'هشدارهای موجودی کم', 'مدیریت سفارش', 'پایگاه داده تامین‌کنندگان', 'داشبورد گزارش‌گیری']
+                }
+            };
+
+            // Get details for the selected project
+            const project = projectDetails[projectName] || {
+                title: 'پروژه',
+                technologies: ['فناوری‌های مختلف وب', 'راهکارهای پایگاه داده', 'فریم‌ورک‌های فرانت‌اند', 'سیستم‌های بک‌اند'],
+                features: ['قابلیت‌های سفارشی', 'طراحی واکنش‌گرا', 'رابط کاربری آسان', 'پیاده‌سازی امن']
+            };
+
+            // Create HTML for technologies and features lists
+            const technologiesHTML = project.technologies.map(tech => `<li>${tech}</li>`).join('');
+            const featuresHTML = project.features.map(feature => `<li>${feature}</li>`).join('');
+
+            Swal.fire({
+                title: project.title,
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">این نمای جزئی از پروژه ${project.title} ماست.</p>
+                        <div class="mb-4">
+                            <h4 class="font-semibold">فناوری‌های استفاده شده:</h4>
+                            <ul class="list-disc pr-5 mt-2">
+                                ${technologiesHTML}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">ویژگی‌های کلیدی:</h4>
+                            <ul class="list-disc pr-5 mt-2">
+                                ${featuresHTML}
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'جالبه!',
+                showCancelButton: true,
+                cancelButtonText: 'تماس با ما',
+                footer: '<a href="#contact" class="text-purple-600 hover:underline">گفتگو درباره پروژه مشابه</a>'
+            }).then((result) => {
+                if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                    document.querySelector('#contact').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest',
+                        offsetTop: -80
+                    });
+                }
+            });
+        }
+
+        function showMoreProjectsAlert() {
+            Swal.fire({
+                title: 'پروژه‌های بیشتر',
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">ما پروژه‌های بیشتری در نمونه کارهای خود داریم، از جمله:</p>
+                        <ul class="list-disc pr-5 mt-2">
+                            <li>اپلیکیشن‌های موبایل</li>
+                            <li>سیستم‌های برنامه‌ریزی منابع سازمانی (ERP)</li>
+                            <li>سیستم‌های مدیریت محتوای سفارشی</li>
+                            <li>پلتفرم‌های آموزش آنلاین</li>
+                            <li>راهکارهای هوش مصنوعی و یادگیری ماشین</li>
+                        </ul>
+                        <p class="mt-4">برای دیدن مطالعات موردی بیشتر و نمونه‌های کار ما با ما تماس بگیرید.</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'تماس با ما',
+                showCancelButton: true,
+                cancelButtonText: 'بستن',
+                footer: '<a href="#contact" class="text-purple-600 hover:underline">رفتن به فرم تماس</a>'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector('#contact').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest',
+                        offsetTop: -80
+                    });
+                }
+            });
+        }
+
+        function showAboutAlert() {
+            Swal.fire({
+                title: 'درباره جم‌سافت',
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">جم‌سافت یک شرکت توسعه نرم‌افزار است که در سال1404   با هدف ارائه راهکارهای نرم‌افزاری سفارشی با کیفیت بالا تأسیس شده است.</p>
+                        <div class="mb-4">
+                            <h4 class="font-semibold">ارزش‌های ما:</h4>
+                            <ul class="list-disc pr-5 mt-2">
+                                <li>کد با کیفیت</li>
+                                <li>رویکرد مشتری‌محور</li>
+                                <li>یادگیری مداوم</li>
+                                <li>نوآوری</li>
+                            </ul>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-semibold">تیم ما:</h4>
+                            <p class="mt-2">ما تیمی از توسعه‌دهندگان، طراحان و مدیران پروژه مشتاق هستیم که به ساخت نرم‌افزارهایی که تفاوت ایجاد می‌کنند، متعهدیم.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">فرآیند کار ما:</h4>
+                            <ol class="list-decimal pr-5 mt-2">
+                                <li>کشف و جمع‌آوری نیازمندی‌ها</li>
+                                <li>طراحی و برنامه‌ریزی</li>
+                                <li>توسعه و آزمایش</li>
+                                <li>استقرار و آموزش</li>
+                                <li>پشتیبانی و نگهداری مداوم</li>
+                            </ol>
+                        </div>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'آشنایی با تیم ما',
+                showCancelButton: true,
+                cancelButtonText: 'بستن',
+                footer: '<a href="#about" class="text-purple-600 hover:underline">مطالعه بیشتر درباره ما</a>'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showTeamModal();
+                }
+            });
+        }
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Add initial classes for animation
+        document.querySelectorAll('section > div > div').forEach(element => {
+            element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(element);
+        });
+
+        // Service card hover effects
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.querySelector('.gradient-bg').classList.add('animate-pulse');
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.querySelector('.gradient-bg').classList.remove('animate-pulse');
+            });
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check for URL hash and scroll to section
+            if (window.location.hash) {
+                const targetElement = document.querySelector(window.location.hash);
+                if (targetElement) {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }, 500);
+                }
+            }
+
+            // Add active class to navigation based on scroll position
+            updateActiveNavLink();
+        });
+
+        // Update active navigation link based on scroll position
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', function () {
+                let current = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-purple-700', 'font-semibold');
+                    const href = link.getAttribute('href').substring(1);
+
+                    if (href === current) {
+                        link.classList.add('text-purple-700', 'font-semibold');
+                    }
+                });
+            });
+        }
+
+        // Footer functionality
+
+        // Set current year in footer copyright
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Scroll to top button
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Newsletter form submission
+        document.getElementById('newsletter-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('footer-email').value;
+
+            if (email.trim() === '' || !isValidEmail(email)) {
+                Swal.fire({
+                    title: 'Invalid Email',
+                    text: 'Please enter a valid email address',
+                    icon: 'error',
+                    confirmButtonColor: '#6c5ce7'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Thank You!',
+                text: 'You have been subscribed to our newsletter.',
+                icon: 'success',
+                confirmButtonColor: '#6c5ce7'
+            });
+
+            document.getElementById('footer-email').value = '';
+        });
+
+        // Scroll to specific section and highlight a service
+        function scrollToSection(sectionId, highlight = null) {
+            const section = document.getElementById(sectionId);
+
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+
+                // If a specific service should be highlighted
+                if (highlight) {
+                    setTimeout(() => {
+                        const services = document.querySelectorAll('#services h3');
+                        services.forEach(service => {
+                            if (service.textContent === highlight) {
+                                service.parentElement.parentElement.classList.add('ring-4', 'ring-purple-500', 'ring-opacity-50');
+
+                                // Remove highlight after 2 seconds
+                                setTimeout(() => {
+                                    service.parentElement.parentElement.classList.remove('ring-4', 'ring-purple-500', 'ring-opacity-50');
+                                }, 2000);
+                            }
+                        });
+                    }, 1000);
+                }
+            }
+        }
+
+        // Modal functions for footer links
+        function showMoreServicesModal() {
+            Swal.fire({
+                title: 'خدمات تکمیلی',
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">در جم‌سافت، ما طیف گسترده‌ای از خدمات تکمیلی ارائه می‌دهیم:</p>
+                        <ul class="list-disc pr-5 space-y-2">
+                            <li><strong>راهکارهای ابری</strong> - استقرار در AWS، Azure و Google Cloud</li>
+                            <li><strong>توسعه اپلیکیشن موبایل</strong> - برنامه‌های iOS و Android</li>
+                            <li><strong>خدمات DevOps</strong> - خطوط لوله CI/CD و خودکارسازی زیرساخت</li>
+                            <li><strong>ادغام هوش مصنوعی</strong> - یادگیری ماشین و ویژگی‌های مبتنی بر هوش مصنوعی</li>
+                            <li><strong>راهکارهای تجارت الکترونیک</strong> - فروشگاه‌های آنلاین و پردازش پرداخت</li>
+                            <li><strong>ممیزی امنیتی</strong> - ارزیابی آسیب‌پذیری و آزمون نفوذ</li>
+                        </ul>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'تماس با ما',
+                showCancelButton: true,
+                cancelButtonText: 'بستن'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector('#contact').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest',
+                        offsetTop: -80
+                    });
+                }
+            });
+        }
+
+        function showCareersModal() {
+            Swal.fire({
+                title: 'به تیم ما بپیوندید',
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">ما همیشه به دنبال افراد با استعداد برای پیوستن به تیم خود هستیم. موقعیت‌های شغلی فعلی:</p>
+                        <ul class="list-disc pr-5 space-y-2">
+                            <li><strong>توسعه‌دهنده ارشد فرانت‌اند</strong> - React، Vue.js</li>
+                            <li><strong>مهندس بک‌اند</strong> - Node.js، Python</li>
+                            <li><strong>طراح UI/UX</strong> - Figma، Adobe XD</li>
+                            <li><strong>مدیر پروژه</strong> - Agile، Scrum</li>
+                            <li><strong>مهندس DevOps</strong> - Docker، Kubernetes</li>
+                        </ul>
+                        <p class="mt-4">رزومه خود را به <a href="mailto:careers@jamsoft.ir" class="text-purple-600 hover:underline">careers@jamsoft.ir</a> ارسال کنید</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'درخواست همکاری',
+                showCancelButton: true,
+                cancelButtonText: 'بستن'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "mailto:careers@jamsoft.ir?subject=درخواست همکاری";
+                }
+            });
+        }
+
+        function showBlogModal() {
+            Swal.fire({
+                title: 'وبلاگ ما',
+                html: `
+                    <div class="text-right">
+                        <p class="mb-4">وبلاگ ما به زودی راه‌اندازی می‌شود! ما در مورد موضوعات زیر مطالب منتشر خواهیم کرد:</p>
+                        <ul class="list-disc pr-5 space-y-2">
+                            <li>بهترین روش‌های توسعه نرم‌افزار</li>
+                            <li>روندها و نوآوری‌های فناوری</li>
+                            <li>مطالعات موردی و داستان‌های موفقیت</li>
+                            <li>فرهنگ تیمی و پشت صحنه</li>
+                        </ul>
+                        <p class="mt-4">برای اطلاع از راه‌اندازی وبلاگ ما، در خبرنامه ما عضو شوید.</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'عضویت',
+                showCancelButton: true,
+                cancelButtonText: 'بستن'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('footer-email').focus();
+                }
+            });
+        }
+
+        function showPrivacyPolicyModal() {
+            Swal.fire({
+                title: 'سیاست حفظ حریم خصوصی',
+                html: `
+                    <div class="text-right h-64 overflow-y-auto">
+                        <h4 class="font-semibold mb-2">۱. اطلاعاتی که جمع‌آوری می‌کنیم</h4>
+                        <p class="mb-4 text-sm">ما اطلاعاتی را که مستقیماً به ما ارائه می‌دهید، مانند زمانی که حساب کاربری ایجاد می‌کنید، فرمی را پر می‌کنید، ایمیلی برای ما ارسال می‌کنید یا به هر نحو دیگری با ما ارتباط برقرار می‌کنید، جمع‌آوری می‌کنیم.</p>
+                        
+                        <h4 class="font-semibold mb-2">۲. نحوه استفاده از اطلاعات</h4>
+                        <p class="mb-4 text-sm">ما از اطلاعاتی که جمع‌آوری می‌کنیم برای ارائه، نگهداری و بهبود خدمات خود، توسعه ویژگی‌های جدید و محافظت از جم‌سافت و کاربران ما استفاده می‌کنیم.</p>
+                        
+                        <h4 class="font-semibold mb-2">۳. اشتراک‌گذاری اطلاعات</h4>
+                        <p class="mb-4 text-sm">ما اطلاعات شخصی شما را با اشخاص ثالث به اشتراک نمی‌گذاریم، مگر اینکه در این سیاست حفظ حریم خصوصی شرح داده شده باشد یا با رضایت شما باشد.</p>
+                        
+                        <h4 class="font-semibold mb-2">۴. امنیت داده‌ها</h4>
+                        <p class="mb-4 text-sm">ما اقدامات معقولی را برای کمک به محافظت از اطلاعات شخصی شما در برابر از دست دادن، سرقت، سوء استفاده، دسترسی غیرمجاز، افشا، تغییر و تخریب انجام می‌دهیم.</p>
+                        
+                        <h4 class="font-semibold mb-2">۵. کوکی‌ها</h4>
+                        <p class="mb-4 text-sm">ما از کوکی‌ها و فناوری‌های مشابه برای پیگیری فعالیت در وب‌سایت خود و نگهداری اطلاعات خاص برای بهبود خدمات خود استفاده می‌کنیم.</p>
+                        
+                        <h4 class="font-semibold mb-2">۶. حقوق شما</h4>
+                        <p class="mb-4 text-sm">شما حق دسترسی، تصحیح یا حذف اطلاعات شخصی خود و اعتراض یا محدود کردن پردازش خاصی از اطلاعات شخصی خود را دارید.</p>
+                        
+                        <p class="mt-4 text-sm">آخرین به‌روزرسانی: 1404  اردیبهشت</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'متوجه شدم',
+                width: '600px'
+            });
+        }
+
+        function showTermsModal() {
+            Swal.fire({
+                title: 'شرایط استفاده از خدمات',
+                html: `
+                    <div class="text-right h-64 overflow-y-auto">
+                        <h4 class="font-semibold mb-2">۱. پذیرش شرایط</h4>
+                        <p class="mb-4 text-sm">با دسترسی یا استفاده از خدمات جم‌سافت، شما موافقت می‌کنید که به این شرایط خدمات و تمام قوانین و مقررات قابل اجرا پایبند باشید.</p>
+                        
+                        <h4 class="font-semibold mb-2">۲. مجوز استفاده</h4>
+                        <p class="mb-4 text-sm">اجازه استفاده موقت از خدمات جم‌سافت فقط برای اهداف شخصی و غیرتجاری داده می‌شود. این اعطای مجوز است، نه انتقال عنوان.</p>
+                        
+                        <h4 class="font-semibold mb-2">۳. سلب مسئولیت</h4>
+                        <p class="mb-4 text-sm">خدمات جم‌سافت "همانطور که هست" ارائه می‌شود. جم‌سافت هیچ ضمانتی، صریح یا ضمنی، ارائه نمی‌دهد و بدین وسیله از تمام ضمانت‌ها، از جمله هرگونه ضمانت قابلیت فروش، سلب مسئولیت می‌کند.</p>
+                        
+                        <h4 class="font-semibold mb-2">۴. محدودیت‌ها</h4>
+                        <p class="mb-4 text-sm">در هیچ صورتی، جم‌سافت مسئول هرگونه خسارت ناشی از استفاده یا عدم توانایی استفاده از خدمات جم‌سافت نخواهد بود، حتی اگر جم‌سافت از احتمال چنین خساراتی مطلع شده باشد.</p>
+                        
+                        <h4 class="font-semibold mb-2">۵. تجدیدنظر</h4>
+                        <p class="mb-4 text-sm">جم‌سافت ممکن است این شرایط خدمات را در هر زمان بدون اطلاع قبلی تجدیدنظر کند. با استفاده از خدمات جم‌سافت، شما موافقت می‌کنید که به نسخه فعلی این شرایط خدمات پایبند باشید.</p>
+                        
+                        <h4 class="font-semibold mb-2">۶. قانون حاکم</h4>
+                        <p class="mb-4 text-sm">این شرایط خدمات تحت قوانین ایران تنظیم و تفسیر می‌شود و شما به طور غیرقابل برگشت به صلاحیت انحصاری دادگاه‌های این مکان تسلیم می‌شوید.</p>
+                        
+                        <p class="mt-4 text-sm">آخرین به‌روزرسانی: 1404  اردیبهشت</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonColor: '#6c5ce7',
+                confirmButtonText: 'موافقم',
+                width: '600px'
+            });
+        }
+
+        // Add this script section for contact form and multi-step form logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const steps = document.querySelectorAll('.step-content');
+            const stepIndicators = document.querySelectorAll('.step-indicator');
+            const progressBar = document.getElementById('progress-bar');
+            const projectOptions = document.querySelectorAll('.project-option');
+            const timelineOptions = document.querySelectorAll('.timeline-option');
+            let currentStep = 1;
+
+            // Next step button handler
+            document.querySelectorAll('.next-step').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (validateCurrentStep()) {
+                        moveToNextStep();
+                    }
+                });
+            });
+
+            // Previous step button handler
+            document.querySelectorAll('.prev-step').forEach(button => {
+                button.addEventListener('click', moveToPreviousStep);
+            });
+
+            // Project type selection
+            projectOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    projectOptions.forEach(opt => {
+                        opt.querySelector('.option-radio').classList.remove('border-purple-500');
+                        opt.querySelector('.option-radio-selected').classList.add('hidden');
+                    });
+                    
+                    this.querySelector('input[type="radio"]').checked = true;
+                    this.querySelector('.option-radio').classList.add('border-purple-500');
+                    this.querySelector('.option-radio-selected').classList.remove('hidden');
+                });
+            });
+
+            // Timeline selection
+            timelineOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    timelineOptions.forEach(opt => {
+                        opt.querySelector('.option-radio').classList.remove('border-purple-500');
+                        opt.querySelector('.option-radio-selected').classList.add('hidden');
+                    });
+                    
+                    this.querySelector('input[type="radio"]').checked = true;
+                    this.querySelector('.option-radio').classList.add('border-purple-500');
+                    this.querySelector('.option-radio-selected').classList.remove('hidden');
+                });
+            });
+
+            // Validate current step
+            function validateCurrentStep() {
+                const currentStepElement = document.getElementById(`step-${currentStep}`);
+                const inputs = currentStepElement.querySelectorAll('input, textarea, select');
+                let isValid = true;
+                let errorMessage = '';
+
+                inputs.forEach(input => {
+                    if (input.hasAttribute('required') && !input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('border-red-500');
+                        errorMessage = 'لطفاً تمام فیلدهای ضروری را پر کنید';
+                        setTimeout(() => input.classList.remove('border-red-500'), 2000);
+                    }
+                });
+
+                // Additional specific validations
+                if (currentStep === 1) {
+                    const emailInput = document.getElementById('email');
+                    const phoneInput = document.getElementById('phone');
+                    
+                    if (emailInput.value && !isValidEmail(emailInput.value)) {
+                        isValid = false;
+                        emailInput.classList.add('border-red-500');
+                        errorMessage = 'لطفاً یک آدرس ایمیل معتبر وارد کنید';
+                        setTimeout(() => emailInput.classList.remove('border-red-500'), 2000);
+                    }
+
+                    if (phoneInput.value) {
+                        if (!isValidPhoneNumber(phoneInput.value)) {
+                            isValid = false;
+                            phoneInput.classList.add('border-red-500');
+                            errorMessage = 'شماره تماس باید ۱۱ رقمی و با ۰ شروع شود';
+                            setTimeout(() => phoneInput.classList.remove('border-red-500'), 2000);
+                        }
+                    }
+                }
+
+                if (!isValid && errorMessage) {
+                    Swal.fire({
+                        title: 'خطا در فرم',
+                        text: errorMessage,
+                        icon: 'error',
+                        confirmButtonColor: '#6c5ce7'
+                    });
+                }
+
+                return isValid;
+            }
+
+            // Move to next step
+            function moveToNextStep() {
+                if (currentStep < 4) {
+                    const currentStepElement = document.getElementById(`step-${currentStep}`);
+                    const nextStepElement = document.getElementById(`step-${currentStep + 1}`);
+                    
+                    // Apply exit animation to current step
+                    currentStepElement.classList.add('animate-fadeOut');
+                    
+                    setTimeout(() => {
+                        currentStepElement.classList.add('hidden');
+                        currentStepElement.classList.remove('animate-fadeOut');
+                        
+                        // Show next step with entrance animation
+                        nextStepElement.classList.remove('hidden');
+                        nextStepElement.classList.add('animate-fadeIn');
+                        
+                        setTimeout(() => {
+                            nextStepElement.classList.remove('animate-fadeIn');
+                        }, 500);
+                        
+                        currentStep++;
+                        
+                        // Update progress bar with animation
+                        progressBar.style.transition = 'width 0.5s ease-in-out';
+                        progressBar.style.width = `${currentStep * 25}%`;
+                        
+                        // Update step indicators
+                        stepIndicators.forEach((indicator, index) => {
+                            if (index < currentStep) {
+                                indicator.classList.add('active');
+                                indicator.classList.add('animate-pulse');
+                                setTimeout(() => {
+                                    indicator.classList.remove('animate-pulse');
+                                }, 1000);
+                            }
+                        });
+                    }, 300);
+                }
+            }
+
+            // Move to previous step
+            function moveToPreviousStep() {
+                if (currentStep > 1) {
+                    const currentStepElement = document.getElementById(`step-${currentStep}`);
+                    const prevStepElement = document.getElementById(`step-${currentStep - 1}`);
+                    
+                    // Apply exit animation to current step
+                    currentStepElement.classList.add('animate-fadeOut');
+                    
+                    setTimeout(() => {
+                        currentStepElement.classList.add('hidden');
+                        currentStepElement.classList.remove('animate-fadeOut');
+                        
+                        // Show previous step with entrance animation
+                        prevStepElement.classList.remove('hidden');
+                        prevStepElement.classList.add('animate-fadeIn');
+                        
+                        setTimeout(() => {
+                            prevStepElement.classList.remove('animate-fadeIn');
+                        }, 500);
+                        
+                        currentStep--;
+                        
+                        // Update progress bar with animation
+                        progressBar.style.transition = 'width 0.5s ease-in-out';
+                        progressBar.style.width = `${currentStep * 25}%`;
+                        
+                        // Update step indicators
+                        stepIndicators.forEach((indicator, index) => {
+                            if (index >= currentStep) {
+                                indicator.classList.remove('active');
+                            }
+                        });
+                    }, 300);
+                }
+            }
+
+            // Email validation
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Phone number validation (Persian/Iranian phone numbers)
+            function isValidPhoneNumber(phone) {
+                // Convert Persian digits to English for validation
+                const englishPhone = phone.replace(/[۰-۹]/g, d => {
+                    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                    return persianDigits.indexOf(d);
+                });
+                
+                // Check if it's exactly 11 digits and starts with 0
+                const phoneRegex = /^0\d{10}$/;
+                return phoneRegex.test(englishPhone);
+            }
+
+            // Form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Final validation
+                if (!validateCurrentStep()) {
+                    Swal.fire({
+                        title: 'خطا در فرم',
+                        text: 'لطفاً تمام فیلدهای مورد نیاز را پر کنید.',
+                        icon: 'error',
+                        confirmButtonColor: '#6c5ce7'
+                    });
+                    return;
+                }
+
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    projectType: document.querySelector('input[name="project_type"]:checked')?.value,
+                    timeline: document.querySelector('input[name="timeline"]:checked')?.value,
+                    projectDetails: document.getElementById('project_details').value,
+                    budget: document.getElementById('budget').value
+                };
+
+                // Show loading state
+                Swal.fire({
+                    title: 'در حال ارسال...',
+                    text: 'لطفاً صبر کنید',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Simulate form submission (replace with actual backend logic)
+                setTimeout(() => {
+                    // Successful submission
+                    Swal.fire({
+                        title: 'با موفقیت ارسال شد!',
+                        html: `
+                            <div class="text-right">
+                                <p>از ارسال درخواست شما متشکریم، ${formData.name} عزیز.</p>
+                                <p>ما به زودی با شما تماس خواهیم گرفت.</p>
+                            </div>
+                        `,
+                        icon: 'success',
+                        confirmButtonColor: '#6c5ce7'
+                    });
+
+                    // Reset form
+                    contactForm.reset();
+                    currentStep = 1;
+                    steps.forEach((step, index) => {
+                        if (index === 0) {
+                            step.classList.remove('hidden');
+                        } else {
+                            step.classList.add('hidden');
+                        }
+                    });
+                    progressBar.style.width = '25%';
+                    stepIndicators.forEach((indicator, index) => {
+                        if (index === 0) {
+                            indicator.classList.add('active');
+                        } else {
+                            indicator.classList.remove('active');
+                        }
+                    });
+                }, 1500);
+            });
+        });
+
+        // Localization and Persian number conversion
+        function convertToPersianNumbers(number) {
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return number.toString().replace(/\d/g, d => persianDigits[d]);
+        }
+
+        // Add Persian number conversion to phone input
+        document.getElementById('phone').addEventListener('input', function(e) {
+            // Convert input to Persian numbers
+            this.value = this.value.replace(/\d/g, d => {
+                const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                return persianDigits[d];
+            });
+        });
+
+        // Add this to the DOMContentLoaded event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... existing code ...
+            
+            // Update phone input to handle Persian and English digits
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                // Convert to Persian numbers for display
+                const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                this.value = this.value.replace(/[0-9]/g, d => persianDigits[d]);
+                
+                // Add visual indicator for valid/invalid phone as user types
+                const englishPhone = this.value.replace(/[۰-۹]/g, d => {
+                    return persianDigits.indexOf(d);
+                });
+                
+                if (englishPhone.length > 0) {
+                    if (englishPhone.length === 11 && englishPhone.startsWith('0')) {
+                        this.classList.remove('border-red-500');
+                        this.classList.add('border-green-500');
+                    } else {
+                        this.classList.remove('border-green-500');
+                        this.classList.add('border-red-500');
+                    }
+                } else {
+                    this.classList.remove('border-red-500', 'border-green-500');
+                }
+            });
+        });
+
+        // Add this function to handle the team modal
+        function showTeamModal() {
+            Swal.fire({
+                title: 'تیم جم‌سافت',
+                html: `
+                    <div class="team-modal-content">
+                        <p class="mb-6 text-right">با تیم متخصص و خلاق ما آشنا شوید</p>
+                        
+                        <div class="team-members-grid">
+                            <!-- Member 1 -->
+                            <div class="team-member">
+                                <div class="member-image-container">
+                                    <img src="" alt="فاطمه جمشیدی" class="member-image">
+                                    <div class="member-overlay">
+                                        <div class="member-social">
+                                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="member-name">فاطمه جمشیدی </h4>
+                                <p class="member-age">28سال</p>
+                                <p class="member-role">مدیر عامل و برنامه‌نویس ارشد</p>
+                                <div class="member-skills">
+                                    <span class="skill">React</span>
+                                    <span class="skill">Node.js</span>
+                                    <span class="skill">DevOps</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Member 2 -->
+                            <div class="team-member">
+                                <div class="member-image-container">
+                                    <img src="#" alt=" محمد جمشیدی" class="member-image">
+                                    <div class="member-overlay">
+                                        <div class="member-social">
+                                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="member-name"> محمد جمشیدی</h4>
+                                <p class="member-age">24 سال</p>
+                                <p class="member-role">طراح UI/UX</p>
+                                <div class="member-skills">
+                                    <span class="skill">Figma</span>
+                                    <span class="skill">Adobe XD</span>
+                                    <span class="skill">CSS</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Member 3 -->
+                            <div class="team-member">
+                                <div class="member-image-container">
+                                    <img src="#" alt=" کیوان نصرتی" class="member-image">
+                                    <div class="member-overlay">
+                                        <div class="member-social">
+                                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="member-name">کیوان نصرتی </h4>
+                                <p class="member-age">29 سال</p>
+                                <p class="member-role">مهندس بک‌اند</p>
+                                <div class="member-skills">
+                                    <span class="skill">Python</span>
+                                    <span class="skill">Django</span>
+                                    <span class="skill">SQL</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Member 4 -->
+                            <div class="team-member">
+                                <div class="member-image-container">
+                                    <img src="" alt=" هوشنگ ابتهاج " class="member-image">
+                                    <div class="member-overlay">
+                                        <div class="member-social">
+                                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-medium"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="member-name"> هوشنگ ابتهاج</h4>
+                                <p class="member-age">75 سال</p>
+                                <p class="member-role">توسعه‌دهنده فرانت‌اند</p>
+                                <div class="member-skills">
+                                    <span class="skill">Vue.js</span>
+                                    <span class="skill">React</span>
+                                    <span class="skill">JavaScript</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Member 5 -->
+                            <div class="team-member">
+                                <div class="member-image-container">
+                                    <img src="" alt=" امیر ذبیحی" class="member-image">
+                                    <div class="member-overlay">
+                                        <div class="member-social">
+                                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-stack-overflow"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="member-name"> امیر ذبیحی</h4>
+                                <p class="member-age">20 سال</p>
+                                <p class="member-role">مهندس DevOps</p>
+                                <div class="member-skills">
+                                    <span class="skill">Docker</span>
+                                    <span class="skill">Kubernetes</span>
+                                    <span class="skill">AWS</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Member 6 -->
+                            <div class="team-member">
+                                <div class="member-image-container">
+                                    <img src="" alt=" محمد مهدی نجاتی" class="member-image">
+                                    <div class="member-overlay">
+                                        <div class="member-social">
+                                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-trello"></i></a>
+                                            <a href="#" class="social-icon"><i class="fab fa-slack"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="member-name">محمد مهدی نجاتی </h4>
+                                <p class="member-age">27 سال</p>
+                                <p class="member-role">مدیر پروژه</p>
+                                <div class="member-skills">
+                                    <span class="skill">Agile</span>
+                                    <span class="skill">Scrum</span>
+                                    <span class="skill">Jira</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                width: '80%',
+                confirmButtonText: 'بستن',
+                confirmButtonColor: '#6c5ce7',
+                showCloseButton: true,
+                customClass: {
+                    container: 'team-modal-container',
+                    popup: 'team-modal-popup',
+                    content: 'team-modal-content'
+                },
+                didOpen: () => {
+                    // Add styles for team modal
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .team-modal-popup {
+                            padding: 2rem;
+                            border-radius: 15px;
+                        }
+                        
+                        .team-members-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                            gap: 2rem;
+                            margin-top: 2rem;
+                        }
+                        
+                        .team-member {
+                            background: white;
+                            border-radius: 12px;
+                            overflow: hidden;
+                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                            transition: transform 0.3s ease, box-shadow 0.3s ease;
+                            text-align: center;
+                            padding-bottom: 1rem;
+                        }
+                        
+                        .team-member:hover {
+                            transform: translateY(-10px);
+                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                        }
+                        
+                        .member-image-container {
+                            position: relative;
+                            height: 200px;
+                            overflow: hidden;
+                        }
+                        
+                        .member-image {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            transition: transform 0.5s ease;
+                        }
+                        
+                        .member-overlay {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background: linear-gradient(135deg, rgba(108, 92, 231, 0.9) 0%, rgba(162, 155, 254, 0.9) 100%);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            opacity: 0;
+                            transition: opacity 0.3s ease;
+                        }
+                        
+                        .member-image-container:hover .member-overlay {
+                            opacity: 1;
+                        }
+                        
+                        .member-image-container:hover .member-image {
+                            transform: scale(1.1);
+                        }
+                        
+                        .member-social {
+                            display: flex;
+                            gap: 1rem;
+                        }
+                        
+                        .social-icon {
+                            width: 36px;
+                            height: 36px;
+                            border-radius: 50%;
+                            background: white;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: #6c5ce7;
+                            transition: transform 0.3s ease, background 0.3s ease;
+                        }
+                        
+                        .social-icon:hover {
+                            transform: translateY(-3px);
+                            background: #f5f5f5;
+                        }
+                        
+                        .member-name {
+                            font-size: 1.25rem;
+                            font-weight: 600;
+                            margin-top: 1rem;
+                            margin-bottom: 0.25rem;
+                        }
+                        
+                        .member-age {
+                            color: #6c5ce7;
+                            font-weight: 500;
+                            margin-bottom: 0.25rem;
+                        }
+                        
+                        .member-role {
+                            color: #4a5568;
+                            margin-bottom: 0.75rem;
+                        }
+                        
+                        .member-skills {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 0.5rem;
+                            justify-content: center;
+                            padding: 0 1rem;
+                        }
+                        
+                        .skill {
+                            background: #f7fafc;
+                            color: #6c5ce7;
+                            border: 1px solid #e2e8f0;
+                            border-radius: 9999px;
+                            padding: 0.25rem 0.75rem;
+                            font-size: 0.75rem;
+                        }
+                        
+                        @media (max-width: 768px) {
+                            .team-members-grid {
+                                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                            }
+                        }
+                        
+                        @media (max-width: 640px) {
+                            .team-members-grid {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
